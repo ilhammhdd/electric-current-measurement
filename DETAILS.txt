@@ -13,5 +13,3 @@ sumber:
 
 library:
 1. LCD1602 menggunakan I2C : http://wiki.sunfounder.cc/images/7/7e/LiquidCrystal_I2C.zip
-
-source code : electric_current_measurement.zip
