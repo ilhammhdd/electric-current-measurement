@@ -1,0 +1,17 @@
+komponen : 
+1. Arduino Uno
+2. I2C Bus
+3. LCD1602
+4. ACS712 Module
+5. Project Board GL-12
+6. Kabel jumper
+7. Baterai 9V
+
+sumber:
+1. LCD1602 menggunakan I2C : https://www.sunfounder.com/learn/Sensor-Kit-v2-0-for-Arduino/lesson-1-display-by-i2c-lcd1602-sensor-kit-v2-0-for-arduino.html
+2. mengukur arus DC menggunakan ACS712 : http://www.kraj.in/arduino/arduino-acs712-dc-current-measurement/
+
+library:
+1. LCD1602 menggunakan I2C : http://wiki.sunfounder.cc/images/7/7e/LiquidCrystal_I2C.zip
+
+source code : electric_current_measurement.zip
