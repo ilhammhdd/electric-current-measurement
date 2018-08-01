@@ -13,59 +13,47 @@
 
 LiquidCrystal_I2C lcd(0x27,16,2);
 
-int ScaleFactor = 66;
-double Raw = 0;
+const int AnalogIn = A0;
+int MVPerAmp = 185;
+float ACOffset = 2490.0;//mv
+unsigned int Raw = 0;
 double Voltage = 0;
-double Amps = 0;
-String bufferVoltage;
-String bufferAmps;
-String bufferZero;
-String bufferRaw;
+double Current = 0;
+String Empty = "                ";
 
 void setup()
 {
   Serial.begin(9600);
   lcd.init();
   lcd.backlight();
-  lcd.setCursor(0,0);
 }
 
 void loop() 
 {
-  //Pembacaan di loop agar lebih presisi
-  for (int i=0; i < 1000; i++){
-    Raw = analogRead(A3)/1024.0;
-    Voltage = Raw*5000;
+  for (int i=0; i < 64; i++){
+    Raw = Raw + analogRead(AnalogIn);
   }
 
-  //Arus dihitung dari tegangan yang didapatkan dikurangi dengan offet tegangan lalu dibagi dengan faktor skala modul ACS712-30A
-  Amps = ((Voltage-2500)/ScaleFactor);
-    
-  Serial.println("\n-----------------------------------------");
-  Serial.println("Before added raw offset : "+String(Amps,3));
+  Voltage = ((Raw/64)/1023.0)*5000; //mV
+  Current = ((Voltage-ACOffset)/MVPerAmp); //A
 
-  //Arus yang didapatkan ditambah dengan raw yang terbaca untuk hasil akhir
-  Amps += Raw;
-  Amps = Amps <= Raw ? 0 : Amps;
+  Serial.println("\n-------------------------------------");
+  Serial.println("Raw : "+String(analogRead(AnalogIn)));
+  Serial.println("Voltage : "+String(Voltage, 3)+" mV");
+  Serial.println("Current : "+String(Current, 3)+" A");
+  Serial.println("-------------------------------------\n");
   
-  bufferRaw += F("Titik nol: ");
-  bufferRaw += String(Raw,3);
-  bufferAmps+= String(Amps, 3);
-  bufferAmps+= F("mA");
-
-  Serial.println("Raw :"+bufferRaw);
-  Serial.println("After added raw offset : "+bufferAmps);
-  Serial.println("-----------------------------------------\n");
+  lcd.setCursor(0,0);
+  lcd.print(String(Voltage, 2)+"mV");
+  lcd.setCursor(0,1);
+  lcd.print(String(Current, 2)+"A");
+  
+  Raw=0;
+  
+  delay(700);
 
   lcd.setCursor(0,0);
-  lcd.print(bufferRaw);
-  lcd.setCursor(0,1);
-  lcd.print(bufferAmps);
-  
-  delay(800);
-  lcd.clear();
-  bufferRaw="";
-  bufferAmps= "";
+  lcd.print(Empty);
+  lcd.setCursor(1,0);
+  lcd.print(Empty);
 }
-
-

@@ -1,0 +1,7 @@
+- ADC => Analog-to-Digital Conversion
+- ACS712 bi-directional => mendeteksi arus - dan +
+- ACS712 power source => Karena beroperasi menggunakan 5V ouput dari ACS712 di set 1/2Vcc yaitu sekitar 2.5V agar arus negative akan mengalir dari 2.5V kebawah dan kebalikannya untuk positif
+- ACS712 I/O => Input ke ADC adalah sinyal analog seperti suara, dan output dari ADC adalah sinyal digital seperti binary
+- ACS712 noise/interference terlalu besar => sinyal analog (dalam kasus ini sinyal elektrik) yang tidak diinginkan terlalu besar
+- ACS712 output error => 1.5%
+

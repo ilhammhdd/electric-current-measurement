@@ -1,0 +1,17 @@
+1. Importing library untuk LCD
+2. Membuat instance LCD, parameter kedua dan ketiga sesuai dengan ukuran LCD yang dipakai yaitu 16 x 2
+3. - Assign pin analog yang akan dipakai untuk ACS712 ke const int
+   - Assign sensitivitas output dari ACS712-5B yaitu 185mV/Amp
+   - Assign offset dari ACS712, karena modul ACS712 bi-directional maka titik nol nya adalah 2.5V. Tapi dalam kasus ini terdapat banyak noise dan nilai offset harus sedikit diubah agar titik nol ACS712 mendekati 0.000Amp
+4. Membuat variable dengan zero value masing masing tipe data untuk nanti digunakan
+5. - Menginisiasi Serial
+   - Menginisiasi instance LCD dan backlight
+6. Mengambil sample dari hasil analogRead sebanyak 64 kali
+7. - Menghitung Voltage => ((rata-rata sample)/max int value analog input)*power source dalam mV
+   - Menghitung Current => ((Voltage-offset)/sensitivitas)
+8. Print out Raw yang dibaca oleh analog, Voltage, dan Current di Serial monitor
+9. - Set LCD cursor ke kolom 0 baris 0 dan print out hasil Voltage diikuti oleh "mV"
+    - Set LCD cursor ke kolom 0 baris 1 dan print out hasil Current diikuti oleh "A"
+10. Meng assign Raw menjadi 0 kembali untuk perhitungan selanjutnya
+11. Delay 700ms untuk perhitungan selanjutnya
+12. Mengosongkan kolom 0 baris 1 dan kolom 0 baris 0 di LCD 
